@@ -29,6 +29,7 @@ class TeacherScheduleViewController: UIViewController{
         self.present(alert,animated: true,completion: nil)
       
     }
+    //saves the time entry into core data
     func save(schedule: String){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else{
             return
@@ -48,6 +49,31 @@ class TeacherScheduleViewController: UIViewController{
         } catch let error as NSError {
             print("Could not save time. \(error), \(error.userInfo)")
         }
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        if editingStyle == .delete{
+            timeSchedule.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let requestDelete = NSFetchRequest<NSFetchRequestResult>(entityName: "Time")
+        
+        
+        do{
+            let arrTimeObj = try context.fetch(requestDelete)
+            
+            let objectUpdate = arrTimeObj as! [NSManagedObject]
+            
+            context.delete(objectUpdate[indexPath.row])
+            try context.save()
+        } catch{
+            print("Error. Failed to delete")
+        }
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +98,8 @@ class TeacherScheduleViewController: UIViewController{
             print("Could not retrieve data, \(error), \(error.userInfo)")
         }
     }
+    //delete not functioning?
+    
 }
 
 

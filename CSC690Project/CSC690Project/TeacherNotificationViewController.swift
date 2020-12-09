@@ -8,35 +8,32 @@ class TeacherNotificationViewController: UIViewController{
     var timeSchedule : [NSManagedObject] = []
     
     
-//    func deleteTime(Id:String){
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else{
-//            return
-//        }
-//
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//         
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Time")
-//        fetchRequest.predicate = NSPredicate(format: "id= %@", "\(Id)")
-//        do{
-//            let fetchedResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
-//
-//            for entity in fetchedResults! {
-//                managedContext.delete(entity)
-//                do{
-//                    try managedContext.save()
-//                }
-//                catch let error as Error?{
-//                    print(error?.localizedDescription)
-//                }
-//            }
-//        }
-//        catch _ {
-//            print("Could not delete that entity")
-//        }
-//
-//    }
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        if editingStyle == .delete{
+            timeSchedule.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let requestDelete = NSFetchRequest<NSFetchRequestResult>(entityName: "Time")
+        
+        
+        do{
+            let arrTimeObj = try context.fetch(requestDelete)
+            
+            let objectUpdate = arrTimeObj as! [NSManagedObject]
+            
+            context.delete(objectUpdate[indexPath.row])
+            try context.save()
+        } catch{
+            print("Error. Failed to delete")
+        }
+    }
     override func viewDidLoad() {
+        self.tableView.reloadData()
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self

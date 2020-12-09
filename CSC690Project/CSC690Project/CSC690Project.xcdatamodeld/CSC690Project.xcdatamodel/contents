@@ -3,7 +3,11 @@
     <entity name="Time" representedClassName="Time" syncable="YES" codeGenerationType="class">
         <attribute name="schedule" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="TimeAdded" representedClassName="TimeAdded" syncable="YES" codeGenerationType="class">
+        <attribute name="stuSchedule" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Time" positionX="-45" positionY="0" width="128" height="58"/>
+        <element name="TimeAdded" positionX="-45" positionY="9" width="128" height="58"/>
     </elements>
 </model>
