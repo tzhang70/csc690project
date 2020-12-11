@@ -98,7 +98,7 @@ class TeacherScheduleViewController: UIViewController{
             print("Could not retrieve data, \(error), \(error.userInfo)")
         }
     }
-    //delete not functioning?
+
     
 }
 
