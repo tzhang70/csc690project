@@ -20,4 +20,13 @@ I had many functionalities that I wanted to include, but failed to implement bec
     2. Add that scheduled appointment to a calendar.
     3. Login function
     
-  
+  Must Have:
+    1. Teachers are able to add times.
+    2. Teachers are able to delete times.
+    3. Students are able to add times.
+    
+  Nice to Have:
+    1. Login
+    2. Register
+    3. Have QOL for choosing times. 
+    
